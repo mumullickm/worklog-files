@@ -1,0 +1,337 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex, nofollow"><title>Work record · Miraz Mullick</title><link rel="preconnect" href="https://fonts.googleapis.com"><style>@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+
+/* WorkLog. White, quiet, one accent. The accent is Suma navy; Flight 24 teal and
+   the Other grey appear only where an entry actually belongs to them. */
+
+:root {
+  --sis: #1b3a5c;
+  --sis-soft: #eef2f7;
+  --f24: #0f7b6c;
+  --f24-soft: #ebf5f3;
+  --other: #8494a3;
+  --other-soft: #f1f3f5;
+
+  --ink: #14181d;
+  --ink2: #4a545f;
+  --mute: #77828e;
+  --faint: #9aa4ae;
+  --line: #e3e7ec;
+  --line2: #eef1f4;
+  --bg: #ffffff;
+  --wash: #fafbfc;
+  --red: #b4453f;
+  --red-soft: #fdf2f1;
+  --radius: 10px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: "Inter", system-ui, -apple-system, sans-serif;
+  font-size: 15px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  padding-bottom: 90px;
+}
+
+.wrap { max-width: 760px; margin: 0 auto; padding: 0 22px; }
+button, input, textarea, select { font: inherit; color: inherit; }
+a { color: var(--sis); }
+
+/* ---------------- top bar ---------------- */
+.bar { border-bottom: 1px solid var(--line); background: var(--bg); position: sticky; top: 0; z-index: 20; }
+.bar .wrap { display: flex; align-items: center; gap: 14px; height: 58px; }
+.mark { font-weight: 700; letter-spacing: -0.02em; font-size: 17px; color: var(--sis); text-decoration: none; }
+.mark span { color: var(--faint); font-weight: 500; }
+.bar .sp { flex: 1; }
+.bar a.q { color: var(--mute); text-decoration: none; font-size: 13.5px; }
+.bar a.q:hover { color: var(--sis); }
+
+/* ---------------- head ---------------- */
+.head { padding: 40px 0 26px; }
+.head h1 { font-size: 27px; font-weight: 700; letter-spacing: -0.025em; line-height: 1.2; }
+.head p { color: var(--mute); font-size: 14.5px; margin-top: 8px; max-width: 560px; }
+
+.stat { display: flex; gap: 26px; flex-wrap: wrap; margin-top: 22px; padding-top: 20px; border-top: 1px solid var(--line2); }
+.stat .s .n { font-size: 22px; font-weight: 700; letter-spacing: -0.02em; }
+.stat .s .l { font-size: 11.5px; color: var(--faint); text-transform: uppercase; letter-spacing: 0.09em; font-weight: 600; margin-top: 1px; }
+.stat .s.warn .n { color: var(--red); }
+
+/* ---------------- notice ---------------- */
+.notice { border: 1px solid var(--line); background: var(--wash); border-radius: var(--radius); padding: 14px 16px; font-size: 13.5px; color: var(--ink2); margin-bottom: 22px; }
+.notice.bad { border-color: #f0d6d4; background: var(--red-soft); color: var(--red); }
+.notice strong { font-weight: 600; }
+
+/* ---------------- composer ---------------- */
+.composer { border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+.composer .pad { padding: 18px; }
+.composer .pad + .pad { border-top: 1px solid var(--line2); }
+
+.lbl { font-size: 11.5px; text-transform: uppercase; letter-spacing: 0.09em; color: var(--faint); font-weight: 600; margin-bottom: 9px; }
+
+/* date row */
+.daterow { display: flex; align-items: flex-end; gap: 16px; flex-wrap: wrap; }
+input.day {
+  border: 1px solid var(--line); border-radius: 8px; padding: 8px 12px;
+  font-size: 14px; outline: none; transition: .13s; background: #fff; color: var(--ink);
+}
+input.day:focus { border-color: var(--sis); }
+.dayname { font-size: 13.5px; color: var(--mute); padding-bottom: 9px; }
+.dayname b { color: var(--sis); font-weight: 600; }
+.dayname .dim { color: var(--faint); }
+
+/* requested-by / what-for pair */
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+@media (max-width: 560px) { .two { grid-template-columns: 1fr; } }
+input.ask {
+  width: 100%; border: 0; border-bottom: 1px solid var(--line); border-radius: 0;
+  padding: 4px 0 8px; font-size: 15px; outline: none; background: transparent; transition: .13s;
+}
+input.ask:focus { border-bottom-color: var(--sis); }
+input.ask::placeholder { color: var(--faint); }
+.recall { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 9px; }
+.recall button {
+  border: 1px solid var(--line); background: #fff; border-radius: 6px;
+  padding: 3px 9px; font-size: 12.5px; color: var(--ink2); cursor: pointer; transition: .12s;
+  max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.recall button:hover { border-color: var(--sis); color: var(--sis); background: var(--sis-soft); }
+
+.picks { display: flex; gap: 8px; flex-wrap: wrap; }
+
+/* area groups: a labelled rail so the eye lands in the right cluster */
+.agroup { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 10px; }
+.agroup:last-child { margin-bottom: 0; }
+.aname { flex: 0 0 66px; font-size: 11px; text-transform: uppercase; letter-spacing: .08em;
+  color: var(--faint); font-weight: 600; padding-top: 9px; }
+.agroup .picks { flex: 1; }
+@media (max-width: 560px) {
+  .agroup { flex-direction: column; gap: 6px; }
+  .aname { padding-top: 0; flex: none; }
+}
+
+/* level of work: the weight of the output, never time */
+.picks.levels .pick { flex-direction: column; align-items: flex-start; gap: 1px; padding: 7px 14px; }
+.pick.lv i { font-style: normal; font-size: 11px; color: var(--faint); }
+.pick.lv.on i { color: rgba(255,255,255,.75); }
+.pick.lv.on.routine { background: var(--other); }
+.pick.lv.on.project { background: var(--sis); }
+.pick.lv.on.milestone { background: var(--f24); }
+/* full legal names need room, so they stack rather than truncate */
+.picks.wide .pick { flex: 1 1 auto; justify-content: center; }
+@media (max-width: 620px) { .picks.wide .pick { flex: 1 1 100%; } }
+.pick {
+  border: 1px solid var(--line); background: #fff; border-radius: 999px;
+  padding: 8px 15px; font-size: 13.5px; color: var(--ink2); cursor: pointer;
+  transition: .13s; display: inline-flex; align-items: center; gap: 8px; white-space: nowrap;
+}
+.pick:hover { border-color: var(--mute); }
+.pick .cd { width: 8px; height: 8px; border-radius: 50%; background: currentColor; opacity: .55; }
+.pick.on { color: #fff; border-color: transparent; font-weight: 500; }
+.pick.on .cd { background: #fff; opacity: .9; }
+.pick.on.sis { background: var(--sis); }
+.pick.on.f24 { background: var(--f24); }
+.pick.on.other { background: var(--other); }
+.pick.area.on { background: var(--sis); }
+
+input.area-other {
+  border: 1px solid var(--line); border-radius: 999px; padding: 8px 15px;
+  font-size: 13.5px; width: 130px; outline: none; transition: .13s;
+}
+input.area-other:focus { border-color: var(--sis); }
+
+textarea.what, input.outcome, input.link {
+  width: 100%; border: 0; outline: none; background: transparent;
+  font-size: 16px; color: var(--ink); resize: none; display: block;
+}
+textarea.what { min-height: 62px; font-weight: 500; }
+input.outcome { font-size: 14.5px; color: var(--ink2); margin-top: 10px; }
+textarea.what::placeholder, input.outcome::placeholder, input.link::placeholder { color: var(--faint); }
+
+input.link { font-size: 14px; }
+.links { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 10px; }
+.linkchip {
+  display: inline-flex; align-items: center; gap: 7px; max-width: 100%;
+  border: 1px solid var(--line); border-radius: 7px; padding: 5px 9px;
+  font-size: 12.5px; color: var(--sis); background: var(--sis-soft);
+}
+.linkchip span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 240px; }
+.linkchip b { cursor: pointer; color: var(--mute); font-weight: 400; }
+.linkchip b:hover { color: var(--red); }
+
+.drop {
+  border: 1px dashed var(--line); border-radius: var(--radius); padding: 16px;
+  text-align: center; color: var(--mute); font-size: 13.5px; cursor: pointer; transition: .13s;
+}
+.drop:hover, .drop.over { border-color: var(--sis); background: var(--sis-soft); color: var(--sis); }
+.drop b { color: var(--sis); font-weight: 600; }
+
+.queue { display: flex; flex-direction: column; gap: 7px; margin-top: 11px; }
+.qf { display: flex; align-items: center; gap: 10px; border: 1px solid var(--line2); border-radius: 8px; padding: 7px 10px; font-size: 13px; background: var(--wash); }
+.qf .th { width: 34px; height: 26px; border-radius: 4px; object-fit: cover; background: #e9edf1; flex: none; }
+.qf .nm { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.qf .sz { color: var(--faint); font-size: 12px; flex: none; }
+.qf .x { cursor: pointer; color: var(--faint); flex: none; padding: 0 3px; }
+.qf .x:hover { color: var(--red); }
+.qf.over { border-color: #f0d6d4; background: var(--red-soft); color: var(--red); }
+
+.foot { display: flex; align-items: center; gap: 14px; padding: 14px 18px; background: var(--wash); border-top: 1px solid var(--line2); flex-wrap: wrap; }
+.chk { display: inline-flex; align-items: center; gap: 8px; font-size: 13.5px; color: var(--ink2); cursor: pointer; user-select: none; }
+.chk input { width: 15px; height: 15px; accent-color: var(--red); }
+.foot .sp { flex: 1; }
+.foot .msg { font-size: 13px; color: var(--mute); }
+.foot .msg.err { color: var(--red); }
+.foot .msg.ok { color: var(--f24); }
+
+button.save {
+  background: var(--sis); color: #fff; border: 0; border-radius: 8px;
+  padding: 10px 22px; font-size: 14px; font-weight: 600; cursor: pointer; transition: .13s;
+}
+button.save:hover { background: #16304c; }
+button.save:disabled { background: #c6ced7; cursor: default; }
+
+/* ---------------- record ---------------- */
+.sec { margin-top: 46px; }
+.sec h2 { font-size: 13px; font-weight: 600; letter-spacing: 0.02em; color: var(--ink); display: flex; align-items: baseline; gap: 10px; padding-bottom: 12px; border-bottom: 1px solid var(--line); }
+.sec h2 em { font-style: normal; font-weight: 400; color: var(--faint); font-size: 12.5px; }
+
+.dayblock { padding: 24px 0 6px; border-bottom: 1px solid var(--line2); }
+.dayblock:last-child { border-bottom: 0; }
+.dayblock .dh { display: flex; align-items: baseline; gap: 10px; margin-bottom: 14px; }
+.dayblock .dh b { font-size: 14px; font-weight: 600; }
+.dayblock .dh i { font-style: normal; font-size: 13px; color: var(--faint); }
+.dayblock .dh .today { font-size: 11px; font-weight: 600; color: var(--sis); background: var(--sis-soft); padding: 2px 8px; border-radius: 999px; letter-spacing: .04em; }
+
+.rec { display: flex; gap: 13px; padding: 13px 0; }
+.rec + .rec { border-top: 1px solid var(--line2); }
+.rec .bar3 { width: 3px; border-radius: 3px; flex: none; background: var(--other); }
+.rec.sis .bar3 { background: var(--sis); }
+.rec.f24 .bar3 { background: var(--f24); }
+.rec.blk .bar3 { background: var(--red); }
+.rec .bd { flex: 1; min-width: 0; }
+.rec .tags { display: flex; gap: 7px; flex-wrap: wrap; align-items: center; margin-bottom: 6px; }
+.tg { font-size: 11.5px; padding: 2px 8px; border-radius: 5px; background: var(--other-soft); color: var(--ink2); white-space: nowrap; }
+.tg.sis { background: var(--sis-soft); color: var(--sis); }
+.tg.f24 { background: var(--f24-soft); color: var(--f24); }
+.tg.blk { background: var(--red-soft); color: var(--red); font-weight: 600; }
+.rec .wt { font-size: 15px; font-weight: 500; }
+.rec .oc { font-size: 14px; color: var(--ink2); margin-top: 3px; }
+.rec .del { color: var(--faint); font-size: 12px; cursor: pointer; flex: none; opacity: 0; transition: .13s; }
+.rec:hover .del { opacity: 1; }
+.rec .del:hover { color: var(--red); }
+
+.tg.lv-project { background: var(--sis-soft); color: var(--sis); font-weight: 600; }
+.tg.lv-milestone { background: var(--f24-soft); color: var(--f24); font-weight: 600; }
+
+.rec .who { font-size: 12.5px; color: var(--mute); margin-top: 6px; }
+.rec .who b { color: var(--ink2); font-weight: 600; }
+.recfiles a.doc.pub b { color: var(--f24); }
+
+.reclinks { display: flex; flex-direction: column; gap: 3px; margin-top: 8px; }
+.reclinks a { font-size: 13px; color: var(--sis); text-decoration: none; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.reclinks a:hover { text-decoration: underline; }
+
+.recfiles { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+.recfiles a { display: block; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; text-decoration: none; background: var(--wash); }
+.recfiles a img { width: 108px; height: 74px; object-fit: cover; display: block; }
+.recfiles a.doc { width: 108px; height: 74px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; color: var(--mute); font-size: 11px; }
+.recfiles a.doc b { font-size: 11px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--sis); }
+
+.blank { padding: 40px 0; text-align: center; color: var(--faint); font-size: 14px; }
+.blank b { display: block; color: var(--ink2); font-weight: 600; margin-bottom: 4px; }
+
+footer { margin-top: 54px; padding-top: 18px; border-top: 1px solid var(--line2); color: var(--faint); font-size: 12.5px; display: flex; justify-content: space-between; gap: 14px; flex-wrap: wrap; }
+
+@media (max-width: 560px) {
+  .head h1 { font-size: 23px; }
+  .stat { gap: 18px; }
+  .composer .pad { padding: 15px; }
+  .recfiles a img, .recfiles a.doc { width: 92px; height: 64px; }
+}
+
+/* Report view. Shares the tokens in styles.css, adds the picker and the printed sheet.
+   The printed page must look like a document, not a screenshot of a web app. */
+
+.picker { border: 1px solid var(--line); border-radius: 14px; padding: 18px; margin-bottom: 18px; }
+.range { display: flex; align-items: flex-end; gap: 14px; flex-wrap: wrap; }
+.range > div { display: flex; flex-direction: column; }
+.quick { display: flex; gap: 7px; flex-wrap: wrap; margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--line2); }
+.quick button {
+  border: 1px solid var(--line); background: #fff; border-radius: 999px;
+  padding: 6px 13px; font-size: 13px; color: var(--ink2); cursor: pointer; transition: .12s;
+}
+.quick button:hover { border-color: var(--sis); color: var(--sis); background: var(--sis-soft); }
+
+.actions { display: flex; align-items: center; gap: 10px; margin-bottom: 26px; flex-wrap: wrap; }
+button.ghost {
+  background: #fff; color: var(--sis); border: 1px solid var(--line);
+  border-radius: 8px; padding: 10px 18px; font-size: 14px; font-weight: 600; cursor: pointer; transition: .13s;
+}
+button.ghost:hover { border-color: var(--sis); background: var(--sis-soft); }
+button.ghost:disabled { color: var(--faint); cursor: default; }
+.actions .msg { font-size: 13px; color: var(--mute); }
+.actions .msg.err { color: var(--red); }
+.actions .msg.ok { color: var(--f24); }
+.actions .msg a { color: var(--f24); }
+
+/* ---------------- the sheet ---------------- */
+.sheet { border-top: 2px solid var(--sis); padding-top: 22px; }
+.sheet .rhead { display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; flex-wrap: wrap; margin-bottom: 24px; }
+.sheet .rhead h2 { font-size: 21px; font-weight: 700; letter-spacing: -0.02em; }
+.sheet .rhead .span { color: var(--mute); font-size: 14px; margin-top: 3px; }
+.sheet .rhead .who { text-align: right; font-size: 12.5px; color: var(--mute); }
+.sheet .rhead .who b { display: block; color: var(--ink); font-size: 14px; font-weight: 600; }
+
+.figs { display: flex; gap: 30px; flex-wrap: wrap; padding: 16px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); margin-bottom: 26px; }
+.figs .f .n { font-size: 24px; font-weight: 700; letter-spacing: -0.02em; }
+.figs .f .l { font-size: 11px; text-transform: uppercase; letter-spacing: .09em; color: var(--faint); font-weight: 600; }
+
+.rsec { margin-bottom: 28px; page-break-inside: auto; }
+.rsec > h3 { font-size: 12px; text-transform: uppercase; letter-spacing: .1em; color: var(--sis); font-weight: 700; padding-bottom: 8px; border-bottom: 1px solid var(--line); margin-bottom: 4px; }
+.rsec > h3 .n { color: var(--faint); font-weight: 500; letter-spacing: 0; text-transform: none; font-size: 12px; }
+
+.split { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 26px; }
+.split .cbar { flex: 1 1 180px; border: 1px solid var(--line); border-radius: 10px; padding: 13px 15px; }
+.split .cbar .nm { font-size: 12.5px; color: var(--ink2); display: flex; align-items: center; gap: 7px; }
+.split .cbar .nm i { width: 8px; height: 8px; border-radius: 50%; font-style: normal; }
+.split .cbar .v { font-size: 21px; font-weight: 700; margin-top: 5px; letter-spacing: -0.02em; }
+.split .cbar .sub { font-size: 11.5px; color: var(--faint); }
+
+.rrow { padding: 13px 0; border-bottom: 1px solid var(--line2); page-break-inside: avoid; }
+.rrow:last-child { border-bottom: 0; }
+.rrow .top { display: flex; gap: 9px; align-items: baseline; flex-wrap: wrap; margin-bottom: 3px; }
+.rrow .dt { font-size: 12px; color: var(--faint); flex: none; min-width: 76px; }
+.rrow .wt { font-size: 14.5px; font-weight: 600; flex: 1; min-width: 200px; }
+.rrow .oc { font-size: 13.5px; color: var(--ink2); margin-left: 85px; }
+.rrow .meta { font-size: 12px; color: var(--mute); margin-left: 85px; margin-top: 3px; }
+.rrow .meta b { color: var(--ink2); font-weight: 600; }
+.rrow .att { margin-left: 85px; margin-top: 5px; font-size: 12px; }
+.rrow .att a { color: var(--sis); display: block; word-break: break-all; }
+@media (max-width: 560px) {
+  .rrow .oc, .rrow .meta, .rrow .att { margin-left: 0; }
+}
+
+.pill { font-size: 10.5px; padding: 2px 7px; border-radius: 4px; background: var(--other-soft); color: var(--ink2); flex: none; }
+.pill.sis { background: var(--sis-soft); color: var(--sis); }
+.pill.f24 { background: var(--f24-soft); color: var(--f24); }
+.pill.milestone { background: var(--f24-soft); color: var(--f24); font-weight: 700; }
+.pill.blk { background: var(--red-soft); color: var(--red); font-weight: 700; }
+
+.rfoot { margin-top: 30px; padding-top: 14px; border-top: 1px solid var(--line); font-size: 11.5px; color: var(--faint); display: flex; justify-content: space-between; gap: 14px; flex-wrap: wrap; }
+
+/* ---------------- print ---------------- */
+@media print {
+  @page { margin: 16mm 14mm; }
+  .noprint, .bar, .picker, .actions, .head { display: none !important; }
+  body { padding: 0; font-size: 11pt; }
+  .wrap { max-width: none; padding: 0; }
+  .sheet { border-top: 2pt solid #1b3a5c; }
+  .rsec { page-break-inside: auto; }
+  .rrow { page-break-inside: avoid; }
+  .rsec > h3 { page-break-after: avoid; }
+  a { text-decoration: none; }
+}
+</style></head><body><div class="wrap"><div class="sheet"><div class="rhead"><div><h2>Work record</h2><div class="span">1 Jul 2026 to 30 Sept 2026</div></div><div class="who"><b>Miraz Mullick</b>Digital Marketing<br>Suma International Services Ltd. · Flight 24 BD Ltd.</div></div><div class="figs"><div class="f"><div class="n">10</div><div class="l">entries</div></div><div class="f"><div class="n">4</div><div class="l">days</div></div><div class="f"><div class="n">2</div><div class="l">milestones</div></div><div class="f"><div class="n">5</div><div class="l">files</div></div><div class="f"><div class="n">1</div><div class="l">blocker</div></div></div><div class="split"><div class="cbar"><div class="nm"><i style="background:#0f7b6c"></i>Flight 24 BD Ltd.</div><div class="v">6</div><div class="sub">Campaigns · Events · Paid Ads</div></div><div class="cbar"><div class="nm"><i style="background:#1b3a5c"></i>Suma International Services Ltd.</div><div class="v">4</div><div class="sub">Design · Campaigns · Reporting</div></div></div><div class="rsec"><h3>Milestones <span class="n">2</span></h3><div class="rrow"><div class="top"><span class="dt">Sun 20 Sept</span><span class="wt">Forward-dated entry</span><span class="pill milestone">Milestone</span><span class="pill f24">Flight 24 BD Ltd.</span><span class="pill">Events</span></div></div><div class="rrow"><div class="top"><span class="dt">Sat 15 Aug</span><span class="wt">Launched the Eid retargeting campaign</span><span class="pill milestone">Milestone</span><span class="pill f24">Flight 24 BD Ltd.</span><span class="pill">Paid Ads</span></div><div class="oc">First 24h: 41 enquiries at BDT 62 each</div><div class="meta">Requested by <b>Nasir, Managing Director</b> · for <b>Eid campaign</b></div></div></div><div class="rsec"><h3>The record <span class="n">10 entries</span></h3><div class="rrow"><div class="top"><span class="dt">Sun 20 Sept</span><span class="wt">Forward-dated entry</span><span class="pill milestone">Milestone</span><span class="pill f24">Flight 24 BD Ltd.</span><span class="pill">Events</span></div></div><div class="rrow"><div class="top"><span class="dt">Sat 15 Aug</span><span class="wt">Launched the Eid retargeting campaign</span><span class="pill milestone">Milestone</span><span class="pill f24">Flight 24 BD Ltd.</span><span class="pill">Paid Ads</span></div><div class="oc">First 24h: 41 enquiries at BDT 62 each</div><div class="meta">Requested by <b>Nasir, Managing Director</b> · for <b>Eid campaign</b></div></div><div class="rrow"><div class="top"><span class="dt">Sat 15 Aug</span><span class="wt">Built the Umrah package newsletter</span><span class="pill f24">Flight 24 BD Ltd.</span><span class="pill">Email Marketing</span></div><div class="oc">Sent to 4,200 subscribers</div><div class="meta">Requested by <b>Rashed, Sales</b> · for <b>Umrah package launch</b></div><div class="att"><a href="https://mumullickm.github.io/worklog-files/f/2026-08-15/333cb3fa-newsletter-proof.pdf" target="_blank" rel="noopener">newsletter-proof.pdf</a></div></div><div class="rrow"><div class="top"><span class="dt">Sat 15 Aug</span><span class="wt">Browser-driven save test</span><span class="pill f24">Flight 24 BD Ltd.</span><span class="pill">Analytics</span></div><div class="oc">Company picker, area, link and file attachment all through the UI</div><div class="att"><a href="https://mirage.aykizintelligence.com/worklog/api/file/2026-08-15/c3e628767f3449fd9d70-ui-attached.png" target="_blank" rel="noopener">ui-attached.png</a><a href="https://example.com/pasted-from-the-ui" target="_blank" rel="noopener">https://example.com/pasted-from-the-ui</a></div></div><div class="rrow"><div class="top"><span class="dt">Sat 15 Aug</span><span class="wt">Reworked the visa-service carousel into a single static</span><span class="pill sis">Suma International Services Ltd.</span><span class="pill">Design</span></div><div class="oc">Saves a design cycle per week</div><div class="att"><a href="https://mirage.aykizintelligence.com/worklog/api/file/2026-08-15/bfbcab65c0be4ec8a685-carousel.png" target="_blank" rel="noopener">carousel.png</a><a href="https://mirage.aykizintelligence.com/worklog/api/file/2026-08-15/ebb4b121d1274a169c9a-brief.pdf" target="_blank" rel="noopener">brief.pdf</a><a href="https://suma.example/deck" target="_blank" rel="noopener">https://suma.example/deck</a><a href="https://drive.example/file/abc" target="_blank" rel="noopener">https://drive.example/file/abc</a></div></div><div class="rrow"><div class="top"><span class="dt">Sat 15 Aug</span><span class="wt">Opening-day clamp check</span><span class="pill f24">Flight 24 BD Ltd.</span><span class="pill">Campaigns</span></div><div class="oc">Written before Saturday, files under Saturday</div></div><div class="rrow"><div class="top"><span class="dt">Thu 13 Aug</span><span class="wt">Entry with an image attached</span><span class="pill sis">Suma International Services Ltd.</span><span class="pill">Design</span></div><div class="att"><a href="https://mirage.aykizintelligence.com/worklog/api/file/2026-08-13/30800d657cbd48dfa8a4-wl-test.png" target="_blank" rel="noopener">wl-test.png</a></div></div><div class="rrow"><div class="top"><span class="dt">Thu 13 Aug</span><span class="wt">Verification entry</span><span class="pill f24">Flight 24 BD Ltd.</span><span class="pill">Campaigns</span></div><div class="oc">Proves the write path</div><div class="att"><a href="https://example.com/a" target="_blank" rel="noopener">https://example.com/a</a></div></div><div class="rrow"><div class="top"><span class="dt">Thu 2 Jul</span><span class="wt">Backdated entry, six weeks before the old lock</span><span class="pill ">Project</span><span class="pill sis">Suma International Services Ltd.</span><span class="pill">Reporting</span></div></div></div><div class="rsec"><h3>Blockers <span class="n">1</span></h3><div class="rrow"><div class="top"><span class="dt">Sat 15 Aug</span><span class="wt">Ad account billing card declined again</span><span class="pill blk">Blocker</span><span class="pill sis">Suma International Services Ltd.</span><span class="pill">Campaigns</span></div><div class="oc">Waiting on finance to swap the card</div></div></div><div class="rfoot"><span>WorkLog · private record · no time tracking</span><span>Generated 13 Aug 2026</span></div></div></div></body></html>
